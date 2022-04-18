@@ -8,3 +8,7 @@ export const SilentRenew = () => (
     }}
   </AuthConsumer>
 );
+
+/**
+ *  Is going to be used by the event addAccessTokenExpired configured on the AuthService.
+ */

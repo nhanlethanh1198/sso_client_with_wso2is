@@ -1,5 +1,5 @@
 import { IDENTITY_CONFIG, METADATA_OIDC } from "../utils/auth.const";
-import { UserManager, WebStorageStateStore, Log } from "react-oidc";
+import { UserManager, WebStorageStateStore, Log } from "oidc-client";
 
 export default class AuthService {
   UserManager;
