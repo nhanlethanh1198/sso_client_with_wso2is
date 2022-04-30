@@ -1,13 +1,11 @@
-import { BrowserRouter } from "react-router-dom";
-import AuthProvider from "./providers/auth.provider";
-import { Routes } from "./routes";
+import AuthContext from './context/AuthProvider'
 
-function App() {
+const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter children={Routes} basename={"/"} />
-    </AuthProvider>
+    <AuthContext>
+      <h1>Hello World</h1>
+    </AuthContext>
   );
-}
+};
 
 export default App;
