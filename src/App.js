@@ -1,14 +1,19 @@
-import AuthContext from "./context/AuthProvider";
 import { BrowserRouter } from "react-router-dom";
-import Routes from './routes'
+// import ScrollToTop from "./components/ScrollToTop";
+import AuthContext from "./context/AuthProvider";
+import Routes from "./routes";
+import ThemeConfig from "./theme";
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <AuthContext>
-        <Routes />
-      </AuthContext>
-    </BrowserRouter>
+    <ThemeConfig>
+      {/* <ScrollToTop /> */}
+      <BrowserRouter>
+        <AuthContext>
+          <Routes />
+        </AuthContext>
+      </BrowserRouter>
+    </ThemeConfig>
   );
 };
 
