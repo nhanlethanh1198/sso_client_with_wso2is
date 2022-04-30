@@ -5,7 +5,7 @@ import {
     VerifyEmailResend,
     VerifyEmailResendSuccess,
     VerifyEmailSuccess
-} from "@/pages";
+} from "src/pages";
 import { useRoutes } from "react-router-dom";
 
 const Routes = () => {

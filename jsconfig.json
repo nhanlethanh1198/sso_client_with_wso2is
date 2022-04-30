@@ -1,10 +1,16 @@
 {
   "compilerOptions": {
-    "baseUrl": "src",
+    "target": "es6",
     "module": "commonjs",
-    "target": "ES6",
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@pages": ["./pages"],
+      "@components": ["./components"],
+      "@utils": ["./utils"],
+      "@services": ["./services"],
+      "@config": ["./config"],
+      "@constants": ["./constants"],
+      "@api": ["./api"]
     }
   },
   "include": ["src/**/*"],
