@@ -1,10 +1,14 @@
-import AuthContext from './context/AuthProvider'
+import AuthContext from "./context/AuthProvider";
+import { BrowserRouter } from "react-router-dom";
+import Routes from './routes'
 
 const App = () => {
   return (
-    <AuthContext>
-      <h1>Hello World</h1>
-    </AuthContext>
+    <BrowserRouter>
+      <AuthContext>
+        <Routes />
+      </AuthContext>
+    </BrowserRouter>
   );
 };
 
