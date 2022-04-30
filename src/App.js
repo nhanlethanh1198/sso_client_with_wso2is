@@ -1,13 +1,20 @@
 import { BrowserRouter } from "react-router-dom";
-import AuthProvider from "./providers/auth.provider";
-import { Routes } from "./routes";
+// import ScrollToTop from "./components/ScrollToTop";
+import AuthContext from "./context/AuthProvider";
+import Routes from "./routes";
+import ThemeConfig from "./theme";
 
-function App() {
+const App = () => {
   return (
-    <AuthProvider>
-      <BrowserRouter children={Routes} basename={"/"} />
-    </AuthProvider>
+    <ThemeConfig>
+      {/* <ScrollToTop /> */}
+      <BrowserRouter>
+        <AuthContext>
+          <Routes />
+        </AuthContext>
+      </BrowserRouter>
+    </ThemeConfig>
   );
-}
+};
 
 export default App;

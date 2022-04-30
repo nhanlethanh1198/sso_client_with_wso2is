@@ -1,13 +1,11 @@
-export const CONFIG = {
-  TOKEN_ENDPOINT: "https://localhost:9443/oauth2/token",
-  AUTHORIZE_ENDPOINT: "https://localhost:9443/oauth2/authorize",
-  RESPONSE_TYPE: "code",
-  SCOPE: "openid",
-  REDIRECT_URI: "https://localhost:9000",
-  CLIENT_ID: "",
-  CLIENT_SECRET: "",
-  GRANT_TYPE: "authorization_code",
-  CLIENT_URL: "https://localhost:9000",
-  LOGOUT_URL: "https://localhost:9443/oidc/logout",
-  COOKIE_PATH: "/",
+const {REACT_APP_CLIENT_ID, REACT_APP_SIGN_IN_REDIRECT_URI, REACT_APP_SIGN_OUT_REDIRECT_URI} = process.env;
+
+const config = {
+    clientID: REACT_APP_CLIENT_ID,
+    baseUrl: "",
+    signInRedirectURL: REACT_APP_SIGN_IN_REDIRECT_URI,
+    signOutRedirectURL: REACT_APP_SIGN_OUT_REDIRECT_URI,
+    scopes: ["openid", "profile", "email"],
 };
+
+export default config;
