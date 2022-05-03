@@ -14,12 +14,14 @@ import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Copyright } from "src/components";
 import { registerSchema } from "src/schema";
+import { LoadingButton } from "@mui/lab";
+import { authApi } from "src/api";
 
 import { FormProvider, useForm } from "react-hook-form";
 
 export default function Register() {
   const navigate = useNavigate();
-  const {enqueueSnackbar} = useSnackbar();
+  const { enqueueSnackbar } = useSnackbar();
 
   const methods = useForm({
     mode: "onSubmit",
@@ -29,17 +31,41 @@ export default function Register() {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = methods;
 
-  const onSubmit = useCallback(async (data) => {
-    console.log(data);
-  }, []);
+  const errorField = (name) => {
+    return errors[name] && errors[name].message;
+  };
+
+  const onSubmit = useCallback(
+    async (data) => {
+      const { username, fullname, email, password } = data;
+      await authApi
+        .register({ username, fullname, email, password })
+        .then((response) => {
+          if (response.status === 200) {
+            navigate("..");
+          } else {
+            enqueueSnackbar(response?.data.errors[0].message, {
+              variant: "error",
+            });
+          }
+        })
+        .catch((err) => {
+          const { errors = [] } = err.response?.data;
+          errors?.forEach((error) =>
+            enqueueSnackbar(error.msg, { variant: "error" })
+          );
+        });
+    },
+    [navigate, enqueueSnackbar]
+  );
 
   const onError = (error) => {
     console.error(error);
     Object.keys(error).forEach((key) => {
-        enqueueSnackbar(error[key].message, { variant: "error" });
+      enqueueSnackbar(error[key].message, { variant: "error" });
     });
   };
 
@@ -89,10 +115,20 @@ export default function Register() {
                 margin="normal"
                 required
                 fullWidth
+                label="Username"
+                {...register("username")}
+                autoComplete="username"
+                error={!!errorField("username")}
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
                 label="Email Address"
                 {...register("email")}
                 autoComplete="email"
-                autoFocus
+                error={!!errorField("email")}
               />
               <TextField
                 margin="normal"
@@ -100,6 +136,7 @@ export default function Register() {
                 fullWidth
                 label="Fullname"
                 {...register("fullname")}
+                error={!!errorField("fullname")}
               />
               <TextField
                 margin="normal"
@@ -108,6 +145,7 @@ export default function Register() {
                 label="Password"
                 type="password"
                 {...register("password")}
+                error={!!errorField("password")}
               />
               <TextField
                 margin="normal"
@@ -116,6 +154,7 @@ export default function Register() {
                 label="Confirm your password"
                 type="password"
                 {...register("confirm_password")}
+                error={!!errorField("confirm_password")}
               />
               <Grid container justifyContent={"flex-end"}>
                 <Grid item>
@@ -139,9 +178,14 @@ export default function Register() {
                 </Grid>
               </Grid>
 
-              <Button type="submit" variant="contained" fullWidth>
+              <LoadingButton
+                loading={isSubmitting}
+                type="submit"
+                variant="contained"
+                fullWidth
+              >
                 Register
-              </Button>
+              </LoadingButton>
 
               <Copyright sx={{ mt: 5 }} />
             </Box>

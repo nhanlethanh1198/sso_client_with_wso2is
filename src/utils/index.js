@@ -1,3 +1,3 @@
-import * as asyncLocalStorage from "./asyncLocalStorage";
+import { asyncLocalStorage } from "./asyncLocalStorage";
 
 export { asyncLocalStorage };

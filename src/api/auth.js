@@ -1,6 +1,7 @@
-import { instance } from ".";
+import { instance } from "./instance";
 
 class Auth {
+
   constructor() {
     this.instance = instance;
   }
@@ -9,8 +10,9 @@ class Auth {
     return this.instance.post(`auth/login`, { email, password });
   }
 
-  async register({ email, password, fullname }) {
+  async register({ email, password, fullname, username }) {
     return this.instance.post(`auth/register`, {
+      username,
       email,
       password,
       fullname,
