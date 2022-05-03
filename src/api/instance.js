@@ -1,9 +1,11 @@
 import axios from "axios";
 import { asyncLocalStorage } from "../utils";
 
+const BASE_URL = `${process.env.REACT_APP_HOST}/api/${process.env.REACT_APP_API_VERSION}`;
+
 const axiosInstance = (contentType) => {
   const instance = axios.create({
-    baseURL: process.env.REACT_APP_API,
+    baseURL: BASE_URL,
     timeout: 5000,
   });
 
