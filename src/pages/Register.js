@@ -1,5 +1,6 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import { LoadingButton } from "@mui/lab";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
@@ -12,10 +13,9 @@ import Typography from "@mui/material/Typography";
 import { useSnackbar } from "notistack";
 import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { authApi } from "src/api";
 import { Copyright } from "src/components";
 import { registerSchema } from "src/schema";
-import { LoadingButton } from "@mui/lab";
-import { authApi } from "src/api";
 
 import { FormProvider, useForm } from "react-hook-form";
 

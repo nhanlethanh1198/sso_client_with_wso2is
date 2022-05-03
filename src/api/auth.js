@@ -6,8 +6,8 @@ class Auth {
     this.instance = instance;
   }
 
-  async login({ email, password }) {
-    return this.instance.post(`auth/login`, { email, password });
+  async login(data) {
+    return this.instance.post(`auth/login`, data);
   }
 
   async register({ email, password, fullname, username }) {

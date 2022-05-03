@@ -1,3 +1,6 @@
 import { asyncLocalStorage } from "./asyncLocalStorage";
+import StringUtils from "./stringUtils";
 
-export { asyncLocalStorage };
+const stringUtils = new StringUtils();
+
+export { asyncLocalStorage, stringUtils };
