@@ -1,3 +1,4 @@
+import { yupResolver } from "@hookform/resolvers/yup";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
@@ -8,18 +9,37 @@ import Link from "@mui/material/Link";
 import Paper from "@mui/material/Paper";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
+import { useSnackbar } from "notistack";
+import { useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import { Copyright } from "src/components";
+import { registerSchema } from "src/schema";
+
+import { FormProvider, useForm } from "react-hook-form";
 
 export default function Register() {
   const navigate = useNavigate();
+  const {enqueueSnackbar} = useSnackbar();
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get("email"),
-      password: data.get("password"),
+  const methods = useForm({
+    mode: "onSubmit",
+    resolver: yupResolver(registerSchema),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = methods;
+
+  const onSubmit = useCallback(async (data) => {
+    console.log(data);
+  }, []);
+
+  const onError = (error) => {
+    console.error(error);
+    Object.keys(error).forEach((key) => {
+        enqueueSnackbar(error[key].message, { variant: "error" });
     });
   };
 
@@ -58,82 +78,74 @@ export default function Register() {
           <Typography component="h1" variant="h5">
             Register new Account
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 1 }}
-          >
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              id="fullname"
-              label="Fullname"
-              name="fullname"
-              autoComplete="fullname"
-              autoFocus
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="password"
-              label="Password"
-              type="password"
-              id="password"
-              autoComplete="current-password"
-            />
-            <TextField
-              margin="normal"
-              required
-              fullWidth
-              name="confirm_password"
-              label="Confirm your password"
-              type="password"
-              id="confirm_password"
-            />
-            <Grid container justifyContent={'flex-end'}>
-              <Grid item>
-                <Link
-                  onClick={() => navigate("../login")}
-                  variant="body2"
-                >
-                  {"You have an account? Sign In now!"}
-                </Link>
+          <FormProvider {...methods}>
+            <Box
+              component="form"
+              noValidate
+              onSubmit={handleSubmit(onSubmit, onError)}
+              sx={{ mt: 1 }}
+            >
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Email Address"
+                {...register("email")}
+                autoComplete="email"
+                autoFocus
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Fullname"
+                {...register("fullname")}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Password"
+                type="password"
+                {...register("password")}
+              />
+              <TextField
+                margin="normal"
+                required
+                fullWidth
+                label="Confirm your password"
+                type="password"
+                {...register("confirm_password")}
+              />
+              <Grid container justifyContent={"flex-end"}>
+                <Grid item>
+                  <Link onClick={() => navigate("../login")} variant="body2">
+                    {"You have an account? Sign In now!"}
+                  </Link>
+                </Grid>
               </Grid>
-            </Grid>
-            {/* Login with wso2 or register */}
-            <Grid container direction="row" columnSpacing={2} my={2} mt={1}>
-              <Grid item xs>
-                <Button variant="outlined" color="primary" fullWidth>
-                  Login by WSO2
-                </Button>
+              {/* Login with wso2 or register */}
+              <Grid container direction="row" columnSpacing={2} my={2} mt={1}>
+                <Grid item xs>
+                  <Button variant="outlined" color="primary" fullWidth>
+                    Login by WSO2
+                  </Button>
+                </Grid>
+
+                <Grid item>
+                  <Button variant="outlined" fullWidth>
+                    Register with WSO2
+                  </Button>
+                </Grid>
               </Grid>
 
-              <Grid item>
-                <Button variant="outlined" fullWidth>
-                  Register with WSO2
-                </Button>
-              </Grid>
-            </Grid>
+              <Button type="submit" variant="contained" fullWidth>
+                Register
+              </Button>
 
-            <Button type="submit" variant="contained" fullWidth>
-              Register
-            </Button>
-
-            <Copyright sx={{ mt: 5 }} />
-          </Box>
+              <Copyright sx={{ mt: 5 }} />
+            </Box>
+          </FormProvider>
         </Box>
       </Grid>
     </Grid>
