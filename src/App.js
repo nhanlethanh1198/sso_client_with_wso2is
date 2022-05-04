@@ -3,7 +3,7 @@ import { SnackbarProvider } from "notistack";
 import { BrowserRouter } from "react-router-dom";
 import Slide from "@mui/material/Slide";
 import AuthContext from "./context/AuthProvider";
-import Routes from "./routes";
+import Routes from "./routing/routes";
 import store from "./stores";
 import ThemeConfig from "./theme";
 

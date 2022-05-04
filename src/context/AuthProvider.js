@@ -1,5 +1,5 @@
-import {AuthProvider} from "@asgardeo/auth-react";
-import config from "../config";
+import {AuthProvider} from "oidc-react";
+import {config} from "../config";
 
 const AuthContext = ({children}) => {
     return <AuthProvider config={config}>{children}</AuthProvider>;

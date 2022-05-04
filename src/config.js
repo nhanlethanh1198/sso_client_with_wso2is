@@ -1,6 +1,6 @@
 const {REACT_APP_CLIENT_ID, REACT_APP_SIGN_IN_REDIRECT_URI, REACT_APP_SIGN_OUT_REDIRECT_URI} = process.env;
 
-const config = {
+export const config = {
     clientID: REACT_APP_CLIENT_ID,
     baseUrl: "",
     signInRedirectURL: REACT_APP_SIGN_IN_REDIRECT_URI,
@@ -8,4 +8,12 @@ const config = {
     scopes: ["openid", "profile", "email"],
 };
 
-export default config;
+export const oidcConfig = {
+    onSignIn: () => {
+    //    Redirect
+    },
+    authority: '',
+    client_id: config.clientID,
+    redirect_uri: config.signInRedirectURL,
+}
+
