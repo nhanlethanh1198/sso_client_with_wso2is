@@ -55,8 +55,6 @@ export default function Login() {
         requestBody.username = login;
       }
 
-      console.log(requestBody)
-
       await authApi
         .login({ ...requestBody })
         .then((response) => {
@@ -69,7 +67,7 @@ export default function Login() {
           }
         })
         .catch((err) => {
-          const { errors = [] } = err.response?.data;
+          const { errors = [] } = err?.response?.data;
           errors?.forEach((error) =>
             enqueueSnackbar(error.msg, { variant: "error" })
           );
